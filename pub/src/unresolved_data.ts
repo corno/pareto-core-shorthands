@@ -1,6 +1,8 @@
 import * as _pint from 'pareto-core-internals'
 import * as _pi from 'pareto-core-interface'
 
+export { Source_Location } from 'pareto-core-internals'
+
 const depth = 1
 
 export type Raw_Or_Normal_Dictionary<T> = { [key: string]: T } | _pi.Dictionary<T>
