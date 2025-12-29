@@ -1,7 +1,7 @@
 import * as _pint from 'pareto-core-internals'
 import * as _pi from 'pareto-core-interface'
 
-export { Source_Location, set, not_set } from 'pareto-core-internals'
+export { set, not_set } from 'pareto-core-internals'
 
 const depth = 1
 
@@ -41,7 +41,7 @@ export type List<G_Source, T_L> = {
 
 export const wrap_dictionary = <T>(
     $: Raw_Or_Normal_Dictionary<T>,
-): Dictionary<_pint.Source_Location, T> => {
+): Dictionary<_pi.Deprecated_Source_Location, T> => {
     const location = _pint.get_location_info(depth + 1)
     function is_normal($: Raw_Or_Normal_Dictionary<T>): $ is _pi.Dictionary<T> {
         return $.get_number_of_entries !== undefined && typeof $.get_number_of_entries === "function"
@@ -67,7 +67,7 @@ export const wrap_dictionary = <T>(
 
 export const wrap_list = <T>(
     $: Raw_Or_Normal_List<T>,
-): List<_pint.Source_Location, T> => {
+): List<_pi.Deprecated_Source_Location, T> => {
     const location = _pint.get_location_info(depth + 1)
     const decorated: _pi.List<T> = $ instanceof Array
         ? _pint.list_literal($)
@@ -96,7 +96,7 @@ export const wrap_state_group = <T>(
 
 export const wrap_reference = <T>(
     $: string,
-): Reference_To_Normal_Dictionary_Entry<_pint.Source_Location, T> => {
+): Reference_To_Normal_Dictionary_Entry<_pi.Deprecated_Source_Location, T> => {
     return {
         'location': _pint.get_location_info(depth + 1),
         'key': $,
@@ -105,7 +105,7 @@ export const wrap_reference = <T>(
 
 export const wrap_stack_reference = <T>(
     name: string,
-): Reference_To_Stacked_Dictionary_Entry<_pint.Source_Location, T> => {
+): Reference_To_Stacked_Dictionary_Entry<_pi.Deprecated_Source_Location, T> => {
     return {
         'location': _pint.get_location_info(depth + 1),
         'key': name,
