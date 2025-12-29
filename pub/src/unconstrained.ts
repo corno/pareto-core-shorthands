@@ -1,6 +1,8 @@
 import * as _pint from 'pareto-core-internals'
 import * as _pi from 'pareto-core-interface'
 
+export { set, not_set } from 'pareto-core-internals'
+
 export type Raw_Or_Normal_Dictionary<T> = { [key: string]: T } | _pi.Dictionary<T>
 export type Raw_Or_Normal_List<T> = T[] | _pi.List<T>
 export type Raw_Dictionary<T> = { [key: string]: T }

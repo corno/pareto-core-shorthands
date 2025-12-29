@@ -1,7 +1,7 @@
 import * as _pint from 'pareto-core-internals'
 import * as _pi from 'pareto-core-interface'
 
-export { Source_Location } from 'pareto-core-internals'
+export { Source_Location, set, not_set } from 'pareto-core-internals'
 
 const depth = 1
 
