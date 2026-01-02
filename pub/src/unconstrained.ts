@@ -7,9 +7,6 @@ export type Raw_Or_Normal_Dictionary<T> = { [key: string]: T } | _pi.Dictionary<
 export type Raw_Or_Normal_List<T> = T[] | _pi.List<T>
 export type Raw_Dictionary<T> = { [key: string]: T }
 
-export const to_raw_array = <T>($: _pi.List<T>): readonly T[] => $.__get_raw_copy()
-
-
 export type Dictionary<T_D> = _pi.Dictionary<T_D>
 
 export type List<T_L> = _pi.List<T_L>
