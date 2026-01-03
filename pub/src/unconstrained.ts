@@ -1,7 +1,12 @@
-import * as _pint from 'pareto-core-internals'
+import * as _pinternals from 'pareto-core-internals'
 import * as _pi from 'pareto-core-interface'
 
-export { set, not_set } from 'pareto-core-internals'
+export namespace optional {
+
+    export const set = _pinternals.optional_set
+    export const not_set = _pinternals.optional_not_set
+}
+
 
 export type Raw_Or_Normal_Dictionary<T> = { [key: string]: T } | _pi.Dictionary<T>
 export type Raw_Or_Normal_List<T> = T[] | _pi.List<T>
@@ -19,13 +24,13 @@ export const wrap_dictionary = <T>($: Raw_Or_Normal_Dictionary<T>): Dictionary<T
     if (is_normal($)) {
         return $
     } else {
-        return _pint.dictionary_literal($)
+        return _pinternals.dictionary_literal($)
     }
 }
 
 export const wrap_list = <T>($: Raw_Or_Normal_List<T>): List<T> => {
     if ($ instanceof Array) {
-        return _pint.list_literal($)
+        return _pinternals.list_literal($)
     }
     if (!($.__for_each instanceof Function)) {
         throw new Error("invalid input in 'wrap_list'")
