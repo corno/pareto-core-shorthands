@@ -4,10 +4,9 @@ import { $$ as get_location_info } from 'pareto-core-internals/dist/misc/get_loc
 
 //types
 
-// export type Raw_Or_Normal_Dictionary<T> = { [key: string]: T } | _pi.Dictionary<T>
-// export type Raw_Or_Normal_List<T> = T[] | _pi.List<T>
-export type Raw_Dictionary<T> = { [key: string]: T }
-export type Raw_List<T> = T[]
+export type Raw_Or_Normal_Dictionary<T> = { [key: string]: T } | _pi.Dictionary<T>
+export type Raw_Or_Normal_List<T> = T[] | _pi.List<T>
+
 
 
 export type Reference_To_Normal_Dictionary_Entry<G_Source, T_Dictionary_Entry> = {
@@ -44,32 +43,52 @@ export namespace optional {
     export const set = _pinternals.optional.set
     export const not_set = _pinternals.optional.not_set
 }
-
 export const wrap_dictionary = <T>(
-    $: Raw_Dictionary<T>,
+    $: Raw_Or_Normal_Dictionary<T>,
 ): Dictionary<_pi.Deprecated_Source_Location, T> => {
     const location = get_location_info(depth + 1)
-    return {
-        'location': location,
-        'dictionary': _pinternals.dictionary.literal($).map(($) => ({
+    function is_normal($: Raw_Or_Normal_Dictionary<T>): $ is _pi.Dictionary<T> {
+        return $.__get_number_of_entries !== undefined && typeof $.__get_number_of_entries === "function"
+    }
+    if (is_normal($)) {
+        return {
             'location': location,
-            'entry': $,
-        }))
+            'dictionary': $.map(($) => ({
+                'location': location,
+                'entry': $,
+            }))
+        }
+    } else {
+        return {
+            'location': location,
+            'dictionary': _pinternals.dictionary.literal($).map(($) => ({
+                'location': location,
+                'entry': $,
+            }))
+        }
     }
 }
 
 export const wrap_list = <T>(
-    $: Raw_List<T>,
+    $: Raw_Or_Normal_List<T>,
 ): List<_pi.Deprecated_Source_Location, T> => {
     const location = get_location_info(depth + 1)
+    const decorated: _pi.List<T> = $ instanceof Array
+        ? _pinternals.list.literal($)
+        : $
+
+    if (!(decorated.__for_each instanceof Function)) {
+        throw new Error("invalid input in 'wrap_list'")
+    }
     return {
         'location': location,
-        'list': _pinternals.list.literal($).map(($) => ({
+        'list': decorated.map(($) => ({
             'location': location,
             'element': $,
         }))
     }
 }
+
 
 export const wrap_state_group = <T>(
     $: T,

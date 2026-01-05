@@ -9,22 +9,29 @@ export namespace optional {
 }
 
 
-// export type Raw_Or_Normal_Dictionary<T> = { [key: string]: T } | _pi.Dictionary<T>
-// export type Raw_Or_Normal_List<T> = T[] | _pi.List<T>
-export type Raw_Dictionary<T> = { [key: string]: T }
-export type Raw_List<T> = T[]
-
-export type Dictionary<T_D> = _pi.Dictionary<T_D>
-
-export type List<T_L> = _pi.List<T_L>
+export type Raw_Or_Normal_Dictionary<T> = { [key: string]: T } | _pi.Dictionary<T>
+export type Raw_Or_Normal_List<T> = T[] | _pi.List<T>
 
 
-export const wrap_dictionary = <T>($: Raw_Dictionary<T>): Dictionary<T> => {
-    return _pinternals.dictionary.literal($)
+export const wrap_dictionary = <T>($: Raw_Or_Normal_Dictionary<T>): _pi.Dictionary<T> => {
+    function is_normal($: Raw_Or_Normal_Dictionary<T>): $ is _pi.Dictionary<T> {
+        return $.__get_number_of_entries !== undefined && typeof $.__get_number_of_entries === "function"
+    }
+    if (is_normal($)) {
+        return $
+    } else {
+        return _pinternals.dictionary.literal($)
+    }
 }
 
-export const wrap_list = <T>($: T[]): List<T> => {
-    return _pinternals.list.literal($)
+export const wrap_list = <T>($: Raw_Or_Normal_List<T>): _pi.List<T> => {
+    if ($ instanceof Array) {
+        return _pinternals.list.literal($)
+    }
+    if (!($.__for_each instanceof Function)) {
+        throw new Error("invalid input in 'wrap_list'")
+    }
+    return $
 }
 
 export const wrap_state_group = <T>($: T) => {
