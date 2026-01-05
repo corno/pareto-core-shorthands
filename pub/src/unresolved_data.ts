@@ -45,9 +45,9 @@ export namespace optional {
 export const wrap_dictionary = <T>(
     $: Raw_Or_Normal_Dictionary<T>,
 ): Dictionary<_pi.Deprecated_Source_Location, T> => {
-    const location = _pinternals.get_location_info(depth + 1)
+    const location = _pinternals.deprecated_get_location_info(depth + 1)
     function is_normal($: Raw_Or_Normal_Dictionary<T>): $ is _pi.Dictionary<T> {
-        return $.get_number_of_entries !== undefined && typeof $.get_number_of_entries === "function"
+        return $.__get_number_of_entries !== undefined && typeof $.__get_number_of_entries === "function"
     }
     if (is_normal($)) {
         return {
@@ -71,7 +71,7 @@ export const wrap_dictionary = <T>(
 export const wrap_list = <T>(
     $: Raw_Or_Normal_List<T>,
 ): List<_pi.Deprecated_Source_Location, T> => {
-    const location = _pinternals.get_location_info(depth + 1)
+    const location = _pinternals.deprecated_get_location_info(depth + 1)
     const decorated: _pi.List<T> = $ instanceof Array
         ? _pinternals.list_literal($)
         : $
@@ -92,7 +92,7 @@ export const wrap_state_group = <T>(
     $: T,
 ) => {
     return {
-        'location': _pinternals.get_location_info(depth + 1),
+        'location': _pinternals.deprecated_get_location_info(depth + 1),
         'state group': $,
     }
 }
@@ -101,7 +101,7 @@ export const wrap_reference = <T>(
     $: string,
 ): Reference_To_Normal_Dictionary_Entry<_pi.Deprecated_Source_Location, T> => {
     return {
-        'location': _pinternals.get_location_info(depth + 1),
+        'location': _pinternals.deprecated_get_location_info(depth + 1),
         'key': $,
     }
 }
@@ -110,7 +110,7 @@ export const wrap_stack_reference = <T>(
     name: string,
 ): Reference_To_Stacked_Dictionary_Entry<_pi.Deprecated_Source_Location, T> => {
     return {
-        'location': _pinternals.get_location_info(depth + 1),
+        'location': _pinternals.deprecated_get_location_info(depth + 1),
         'key': name,
     }
 }

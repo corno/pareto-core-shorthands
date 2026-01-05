@@ -19,7 +19,7 @@ export type List<T_L> = _pi.List<T_L>
 
 export const wrap_dictionary = <T>($: Raw_Or_Normal_Dictionary<T>): Dictionary<T> => {
     function is_normal($: Raw_Or_Normal_Dictionary<T>): $ is _pi.Dictionary<T> {
-        return $.get_number_of_entries !== undefined && typeof $.get_number_of_entries === "function"
+        return $.__get_number_of_entries !== undefined && typeof $.__get_number_of_entries === "function"
     }
     if (is_normal($)) {
         return $
