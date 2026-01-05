@@ -9,9 +9,10 @@ export namespace optional {
 }
 
 
-export type Raw_Or_Normal_Dictionary<T> = { [key: string]: T } | _pi.Dictionary<T>
-export type Raw_Or_Normal_List<T> = T[] | _pi.List<T>
+// export type Raw_Or_Normal_Dictionary<T> = { [key: string]: T } | _pi.Dictionary<T>
+// export type Raw_Or_Normal_List<T> = T[] | _pi.List<T>
 export type Raw_Dictionary<T> = { [key: string]: T }
+export type Raw_List<T> = T[]
 
 export type Dictionary<T_D> = _pi.Dictionary<T_D>
 
