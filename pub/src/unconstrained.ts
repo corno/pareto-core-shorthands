@@ -13,7 +13,7 @@ export type Raw_Or_Normal_Dictionary<T> = { [key: string]: T } | _pi.Dictionary<
 export type Raw_Or_Normal_List<T> = T[] | _pi.List<T>
 
 
-export const wrap_dictionary = <T>($: Raw_Or_Normal_Dictionary<T>): _pi.Dictionary<T> => {
+const wrap_dictionary = <T>($: Raw_Or_Normal_Dictionary<T>): _pi.Dictionary<T> => {
     function is_normal($: Raw_Or_Normal_Dictionary<T>): $ is _pi.Dictionary<T> {
         return $.__get_number_of_entries !== undefined && typeof $.__get_number_of_entries === "function"
     }
@@ -24,7 +24,7 @@ export const wrap_dictionary = <T>($: Raw_Or_Normal_Dictionary<T>): _pi.Dictiona
     }
 }
 
-export const wrap_list = <T>($: Raw_Or_Normal_List<T>): _pi.List<T> => {
+const wrap_list = <T>($: Raw_Or_Normal_List<T>): _pi.List<T> => {
     if ($ instanceof Array) {
         return _pinternals.list.literal($)
     }
@@ -34,6 +34,14 @@ export const wrap_list = <T>($: Raw_Or_Normal_List<T>): _pi.List<T> => {
     return $
 }
 
-export const wrap_state_group = <T>($: T) => {
-    return $
+export namespace dictionnary {
+
+    export const literal = wrap_dictionary
+
+}
+
+export namespace list {
+
+    export const literal = wrap_list
+
 }
