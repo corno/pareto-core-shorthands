@@ -34,7 +34,7 @@ const wrap_list = <T>($: Raw_Or_Normal_List<T>): _pi.List<T> => {
     return $
 }
 
-export namespace dictionnary {
+export namespace dictionary {
 
     export const literal = wrap_dictionary
 
