@@ -1,6 +1,6 @@
 import * as _pi from 'pareto-core-interface'
 import * as _pinternals from 'pareto-core-internals/dist/literal'
-import { $$ as get_location_info } from 'pareto-core-internals/dist/misc/get_location_info'
+import { $$ as get_location_info } from 'pareto-core-internals/dist/expression/special/get_location_info'
 
 //types
 
@@ -53,7 +53,7 @@ export const wrap_dictionary = <T>(
     if (is_normal($)) {
         return {
             'location': location,
-            'dictionary': $.map(($) => ({
+            'dictionary': $.__d_map(($) => ({
                 'location': location,
                 'entry': $,
             }))
@@ -61,7 +61,7 @@ export const wrap_dictionary = <T>(
     } else {
         return {
             'location': location,
-            'dictionary': _pinternals.dictionary.literal($).map(($) => ({
+            'dictionary': _pinternals.dictionary.literal($).__d_map(($) => ({
                 'location': location,
                 'entry': $,
             }))
@@ -82,7 +82,7 @@ export const wrap_list = <T>(
     }
     return {
         'location': location,
-        'list': decorated.map(($) => ({
+        'list': decorated.__l_map(($) => ({
             'location': location,
             'element': $,
         }))
