@@ -90,12 +90,22 @@ export const wrap_list = <T>(
 }
 
 
-export const wrap_state_group = <T>(
+export const wrap_state_group = <T extends readonly [string, any]>(
     $: T,
 ) => {
     return {
         'location': get_location_info(depth + 1),
         'state group': $,
+    }
+}
+
+export const wrap_optional = <T>(
+    $: T | null | undefined,
+): _pi.Optional_Value<T> => {
+    if ($ === null || $ === undefined) {
+        return _pinternals.optional.not_set()
+    } else {
+        return _pinternals.optional.set($)
     }
 }
 
