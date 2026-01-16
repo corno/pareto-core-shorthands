@@ -1,6 +1,6 @@
 import * as _pi from 'pareto-core-interface'
 
-import * as _pinternals from 'pareto-core-internals/dist/literal'
+import * as _pinternals from 'pareto-core-internals/dist/sync/expression/initialize'
 
 export namespace optional {
 
