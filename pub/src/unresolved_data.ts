@@ -1,11 +1,12 @@
-import * as _pi from 'pareto-core-interface'
-import * as _pinternals from 'pareto-core-internals/dist/sync/expression/initialize'
-import { $$ as get_location_info } from 'pareto-core-internals/dist/sync/get_location_info'
+import * as _pi from "pareto-core-internals/dist/interface"
+import * as _pinternals from "pareto-core-internals/dist/__internals/sync/expression/initialize"
+import { $$ as get_location_info } from "pareto-core-internals/dist/__internals/sync/get_location_info"
 
 //types
 
 export type Raw_Or_Normal_Dictionary<T> = { [key: string]: T } | _pi.Dictionary<T>
 export type Raw_Or_Normal_List<T> = T[] | _pi.List<T>
+export type Raw_Optional<T> = null | undefined | T
 
 
 
@@ -42,7 +43,16 @@ export namespace optional {
 
     export const set = _pinternals.optional.set
     export const not_set = _pinternals.optional.not_set
+    export const literal = <T>($: Raw_Optional<T>): _pi.Optional_Value<T> => {
+        if ($ === null || $ === undefined) {
+            return not_set()
+        } else {
+            return set($)
+        }
+    }
+
 }
+
 export const wrap_dictionary = <T>(
     $: Raw_Or_Normal_Dictionary<T>,
 ): Dictionary<_pi.Deprecated_Source_Location, T> => {
