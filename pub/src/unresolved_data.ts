@@ -1,6 +1,6 @@
-import * as _pi from "pareto-core-internals/dist/interface"
-import * as _pinternals from "pareto-core-internals/dist/__internals/sync/expression/initialize"
-import { $$ as get_location_info } from "pareto-core-internals/dist/__internals/sync/get_location_info"
+import * as _pi from "pareto-core/dist/interface"
+import * as _pinternals from "pareto-core/dist/__internals/sync/expression/initialize"
+import { $$ as get_location_info } from "pareto-core/dist/__internals/sync/get_location_info"
 
 //types
 

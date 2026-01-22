@@ -1,6 +1,6 @@
-import * as _pi from "pareto-core-internals/dist/interface"
+import * as _pi from "pareto-core/dist/interface"
 
-import * as _pinternals from "pareto-core-internals/dist/__internals/sync/expression/initialize"
+import * as _pinternals from "pareto-core/dist/__internals/sync/expression/initialize"
 
 
 export type Raw_Or_Normal_Dictionary<T> = { [key: string]: T } | _pi.Dictionary<T>
