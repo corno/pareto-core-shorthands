@@ -108,14 +108,6 @@ export const wrap_state = <T extends readonly [string, any]>(
         'state': $,
     }
 }
-export const wrap_state_deprecated = <T extends readonly [string, any]>(
-    $: T,
-) => {
-    return {
-        'location': get_location_info(depth + 1),
-        'state group': $,
-    }
-}
 
 export const wrap_optional = <T>(
     $: T | null | undefined,
