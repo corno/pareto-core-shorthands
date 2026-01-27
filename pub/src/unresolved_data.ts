@@ -30,7 +30,7 @@ export type Dictionary<G_Source, T_D> = {
 
 export type List<G_Source, T_L> = {
     readonly 'list': _pi.List<{
-        readonly 'item': T_L
+        readonly 'element': T_L
         readonly 'location': G_Source
     }>
     readonly 'location': G_Source
