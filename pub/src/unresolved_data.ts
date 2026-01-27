@@ -11,12 +11,12 @@ export type Raw_Optional<T> = null | undefined | T
 
 
 export type Reference_To_Normal_Dictionary_Entry<G_Source, T_Dictionary_Entry> = {
-    readonly 'key': string
+    readonly 'id': string
     readonly 'location': G_Source
 }
 
 export type Reference_To_Stacked_Dictionary_Entry<G_Source, T_Dictionary_Entry> = {
-    readonly 'key': string
+    readonly 'id': string
     readonly 'location': G_Source
 }
 
@@ -30,7 +30,7 @@ export type Dictionary<G_Source, T_D> = {
 
 export type List<G_Source, T_L> = {
     readonly 'list': _pi.List<{
-        readonly 'element': T_L
+        readonly 'item': T_L
         readonly 'location': G_Source
     }>
     readonly 'location': G_Source
@@ -94,7 +94,7 @@ export const wrap_list = <T>(
         'location': location,
         'list': decorated.__l_map(($) => ({
             'location': location,
-            'element': $,
+            'item': $,
         }))
     }
 }
@@ -124,7 +124,7 @@ export const wrap_reference = <T>(
 ): Reference_To_Normal_Dictionary_Entry<_pi.Deprecated_Source_Location, T> => {
     return {
         'location': get_location_info(depth + 1),
-        'key': $,
+        'id': $,
     }
 }
 
@@ -133,6 +133,6 @@ export const wrap_stack_reference = <T>(
 ): Reference_To_Stacked_Dictionary_Entry<_pi.Deprecated_Source_Location, T> => {
     return {
         'location': get_location_info(depth + 1),
-        'key': name,
+        'id': name,
     }
 }
