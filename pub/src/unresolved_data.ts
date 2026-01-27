@@ -11,12 +11,12 @@ export type Raw_Optional<T> = null | undefined | T
 
 
 export type Reference_To_Normal_Dictionary_Entry<G_Source, T_Dictionary_Entry> = {
-    readonly 'id': string
+    readonly 'key': string
     readonly 'location': G_Source
 }
 
 export type Reference_To_Stacked_Dictionary_Entry<G_Source, T_Dictionary_Entry> = {
-    readonly 'id': string
+    readonly 'key': string
     readonly 'location': G_Source
 }
 
@@ -105,7 +105,7 @@ export const wrap_state = <T extends readonly [string, any]>(
 ) => {
     return {
         'location': get_location_info(depth + 1),
-        'option': $,
+        'state': $,
     }
 }
 
@@ -124,7 +124,7 @@ export const wrap_reference = <T>(
 ): Reference_To_Normal_Dictionary_Entry<_pi.Deprecated_Source_Location, T> => {
     return {
         'location': get_location_info(depth + 1),
-        'id': $,
+        'key': $,
     }
 }
 
@@ -133,6 +133,6 @@ export const wrap_stack_reference = <T>(
 ): Reference_To_Stacked_Dictionary_Entry<_pi.Deprecated_Source_Location, T> => {
     return {
         'location': get_location_info(depth + 1),
-        'id': name,
+        'key': name,
     }
 }
