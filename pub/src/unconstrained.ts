@@ -3,7 +3,7 @@ import * as _pi from "pareto-core/dist/interface"
 import * as _pinternals from "pareto-core/dist/__internals/sync/expression/initialize"
 
 
-export type Raw_Or_Normal_Dictionary<T> = { [key: string]: T } | _pi.Dictionary<T>
+export type Raw_Or_Normal_Dictionary<T> = { [id: string]: T } | _pi.Dictionary<T>
 export type Raw_Or_Normal_List<T> = T[] | _pi.List<T>
 export type Raw_Optional<T> = null | undefined | T
 
