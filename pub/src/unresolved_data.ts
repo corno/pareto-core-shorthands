@@ -105,7 +105,7 @@ export const wrap_state = <T extends readonly [string, any]>(
 ) => {
     return {
         'location': get_location_info(depth + 1),
-        'state': $,
+        'option': $,
     }
 }
 
