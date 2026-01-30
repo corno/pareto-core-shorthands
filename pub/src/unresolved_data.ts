@@ -10,12 +10,12 @@ export type Raw_Optional<T> = null | undefined | T
 
 
 
-export type Reference_To_Normal_Dictionary_Entry<G_Source, T_Dictionary_Entry> = {
+export type Reference<G_Source, T_Dictionary_Entry> = {
     readonly 'l id': string
     readonly 'l location': G_Source
 }
 
-export type Reference_To_Stacked_Dictionary_Entry<G_Source, T_Dictionary_Entry> = {
+export type Stack_Reference<G_Source, T_Dictionary_Entry> = {
     readonly 'l id': string
     readonly 'l location': G_Source
 }
@@ -34,6 +34,11 @@ export type List<G_Source, T_L> = {
         readonly 'l location': G_Source
     }>
     readonly 'l location': G_Source
+}
+
+export type State<X> = {
+    readonly 'l location': _pi.Deprecated_Source_Location
+    readonly 'l state': X
 }
 
 //implementations
@@ -99,13 +104,12 @@ export const wrap_list = <T>(
     }
 }
 
-
 export const wrap_state = <T extends readonly [string, any]>(
     $: T,
-) => {
+): State<T> => {
     return {
-        'location': get_location_info(depth + 1),
-        'state': $,
+        'l location': get_location_info(depth + 1),
+        'l state': $,
     }
 }
 
@@ -121,7 +125,7 @@ export const wrap_optional = <T>(
 
 export const wrap_reference = <T>(
     $: string,
-): Reference_To_Normal_Dictionary_Entry<_pi.Deprecated_Source_Location, T> => {
+): Reference<_pi.Deprecated_Source_Location, T> => {
     return {
         'l location': get_location_info(depth + 1),
         'l id': $,
@@ -130,7 +134,7 @@ export const wrap_reference = <T>(
 
 export const wrap_stack_reference = <T>(
     name: string,
-): Reference_To_Stacked_Dictionary_Entry<_pi.Deprecated_Source_Location, T> => {
+): Stack_Reference<_pi.Deprecated_Source_Location, T> => {
     return {
         'l location': get_location_info(depth + 1),
         'l id': name,
