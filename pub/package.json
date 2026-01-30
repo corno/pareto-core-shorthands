@@ -1,6 +1,6 @@
 {
   "name": "pareto-core-shorthands",
-  "version": "0.2.13",
+  "version": "0.2.14",
   "license": "ISC",
   "description": "the pareto package used for building datasets",
   "author": "Corno",
