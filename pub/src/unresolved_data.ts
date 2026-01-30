@@ -10,18 +10,18 @@ export type Raw_Optional<T> = null | undefined | T
 
 
 
-export type Reference<G_Source, T_Dictionary_Entry> = {
-    readonly 'l id': string
+export type Reference<G_Source> = {
+    readonly 'l value': string
     readonly 'l location': G_Source
 }
 
-export type Stack_Reference<G_Source, T_Dictionary_Entry> = {
-    readonly 'l id': string
+export type Stack_Reference<G_Source> = {
+    readonly 'l value': string
     readonly 'l location': G_Source
 }
 
 export type Dictionary<G_Source, T_D> = {
-    readonly 'l dictionary': _pi.Dictionary<{
+    readonly 'l value': _pi.Dictionary<{
         readonly 'l entry': T_D
         readonly 'l location': G_Source
     }>
@@ -29,7 +29,7 @@ export type Dictionary<G_Source, T_D> = {
 }
 
 export type List<G_Source, T_L> = {
-    readonly 'l list': _pi.List<{
+    readonly 'l value': _pi.List<{
         readonly 'l item': T_L
         readonly 'l location': G_Source
     }>
@@ -38,7 +38,7 @@ export type List<G_Source, T_L> = {
 
 export type State<X> = {
     readonly 'l location': _pi.Deprecated_Source_Location
-    readonly 'l state': X
+    readonly 'l value': X
 }
 
 //implementations
@@ -68,7 +68,7 @@ export const wrap_dictionary = <T>(
     if (is_normal($)) {
         return {
             'l location': location,
-            'l dictionary': $.__d_map(($) => ({
+            'l value': $.__d_map(($) => ({
                 'l location': location,
                 'l entry': $,
             }))
@@ -76,7 +76,7 @@ export const wrap_dictionary = <T>(
     } else {
         return {
             'l location': location,
-            'l dictionary': _pinternals.dictionary.literal($).__d_map(($) => ({
+            'l value': _pinternals.dictionary.literal($).__d_map(($) => ({
                 'l location': location,
                 'l entry': $,
             }))
@@ -97,7 +97,7 @@ export const wrap_list = <T>(
     }
     return {
         'l location': location,
-        'l list': decorated.__l_map(($) => ({
+        'l value': decorated.__l_map(($) => ({
             'l location': location,
             'l item': $,
         }))
@@ -109,7 +109,7 @@ export const wrap_state = <T extends readonly [string, any]>(
 ): State<T> => {
     return {
         'l location': get_location_info(depth + 1),
-        'l state': $,
+        'l value': $,
     }
 }
 
@@ -125,18 +125,18 @@ export const wrap_optional = <T>(
 
 export const wrap_reference = <T>(
     $: string,
-): Reference<_pi.Deprecated_Source_Location, T> => {
+): Reference<_pi.Deprecated_Source_Location> => {
     return {
         'l location': get_location_info(depth + 1),
-        'l id': $,
+        'l value': $,
     }
 }
 
 export const wrap_stack_reference = <T>(
     name: string,
-): Stack_Reference<_pi.Deprecated_Source_Location, T> => {
+): Stack_Reference<_pi.Deprecated_Source_Location> => {
     return {
         'l location': get_location_info(depth + 1),
-        'l id': name,
+        'l value': name,
     }
 }
