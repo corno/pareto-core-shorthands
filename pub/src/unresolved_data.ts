@@ -8,43 +8,61 @@ export type Raw_Or_Normal_Dictionary<T> = { [id: string]: T } | _pi.Dictionary<T
 export type Raw_Or_Normal_List<T> = T[] | _pi.List<T>
 export type Raw_Optional<T> = null | undefined | T
 
-
-
-export type Reference<G_Source> = {
-    readonly 'l value': string
-    readonly 'l location': G_Source
-}
-
-export type Stack_Reference<G_Source> = {
-    readonly 'l value': string
-    readonly 'l location': G_Source
+export type Component<T> = {
+    readonly 'l location': _pi.Deprecated_Source_Location
+    readonly 'l component': T
 }
 
 export type Dictionary<G_Source, T_D> = {
-    readonly 'l value': _pi.Dictionary<{
+    readonly 'l location': G_Source
+    readonly 'l dictionary': _pi.Dictionary<{
         readonly 'l entry': T_D
         readonly 'l location': G_Source
     }>
-    readonly 'l location': G_Source
+}
+
+export type Group<T extends {[id: string]: any}> = {
+    readonly 'l location': _pi.Deprecated_Source_Location
+    readonly 'l group': T
 }
 
 export type List<G_Source, T_L> = {
-    readonly 'l value': _pi.List<{
+    readonly 'l list': _pi.List<{
         readonly 'l item': T_L
         readonly 'l location': G_Source
     }>
     readonly 'l location': G_Source
 }
 
+export type Nothing<G_Source> = {
+    readonly 'l location': G_Source
+    readonly 'l nothing': null
+}
+
+export type Number<G_Source> = {
+    readonly 'l location': G_Source
+    readonly 'l number': number
+}
+
+export type Reference<G_Source> = {
+    readonly 'l location': G_Source
+    readonly 'l reference': string
+}
+
 export type State<X> = {
     readonly 'l location': _pi.Deprecated_Source_Location
-    readonly 'l value': X
+    readonly 'l state': X
+}
+
+export type Text<G_Source> = {
+    readonly 'l location': G_Source
+    readonly 'l text': string
 }
 
 //implementations
 
 const depth = 1
-export namespace optional {
+export namespace optionalx {
 
     export const set = _pinternals.optional.set
     export const not_set = _pinternals.optional.not_set
@@ -58,7 +76,16 @@ export namespace optional {
 
 }
 
-export const wrap_dictionary = <T>(
+export const component = <T>(
+    $: T,
+): Component<T> => {
+    return {
+        'l location': get_location_info(depth + 1),
+        'l component': $,
+    }
+}
+
+export const dictionary = <T>(
     $: Raw_Or_Normal_Dictionary<T>,
 ): Dictionary<_pi.Deprecated_Source_Location, T> => {
     const location = get_location_info(depth + 1)
@@ -68,7 +95,7 @@ export const wrap_dictionary = <T>(
     if (is_normal($)) {
         return {
             'l location': location,
-            'l value': $.__d_map(($) => ({
+            'l dictionary': $.__d_map(($) => ({
                 'l location': location,
                 'l entry': $,
             }))
@@ -76,7 +103,7 @@ export const wrap_dictionary = <T>(
     } else {
         return {
             'l location': location,
-            'l value': _pinternals.dictionary.literal($).__d_map(($) => ({
+            'l dictionary': _pinternals.dictionary.literal($).__d_map(($) => ({
                 'l location': location,
                 'l entry': $,
             }))
@@ -84,7 +111,19 @@ export const wrap_dictionary = <T>(
     }
 }
 
-export const wrap_list = <T>(
+export const group = <T>(
+    $: T,
+): {
+    readonly 'l location': _pi.Deprecated_Source_Location
+    readonly 'l value': T
+} => {
+    return {
+        'l location': get_location_info(depth + 1),
+        'l value': $,
+    }
+}
+
+export const list = <T>(
     $: Raw_Or_Normal_List<T>,
 ): List<_pi.Deprecated_Source_Location, T> => {
     const location = get_location_info(depth + 1)
@@ -93,27 +132,34 @@ export const wrap_list = <T>(
         : $
 
     if (!(decorated.__for_each instanceof Function)) {
-        throw new Error("invalid input in 'wrap_list'")
+        throw new Error("invalid input in 'list'")
     }
     return {
         'l location': location,
-        'l value': decorated.__l_map(($) => ({
+        'l list': decorated.__l_map(($) => ({
             'l location': location,
             'l item': $,
         }))
     }
 }
 
-export const wrap_state = <T extends readonly [string, any]>(
-    $: T,
-): State<T> => {
+export const nothing = (): Nothing<_pi.Deprecated_Source_Location> => {
     return {
         'l location': get_location_info(depth + 1),
-        'l value': $,
+        'l nothing': null,
     }
 }
 
-export const wrap_optional = <T>(
+export const number = (
+    $: number,
+): Number<_pi.Deprecated_Source_Location> => {
+    return {
+        'l location': get_location_info(depth + 1),
+        'l number': $,
+    }
+}
+
+export const optional = <T>(
     $: T | null | undefined,
 ): _pi.Optional_Value<T> => {
     if ($ === null || $ === undefined) {
@@ -123,20 +169,29 @@ export const wrap_optional = <T>(
     }
 }
 
-export const wrap_reference = <T>(
+export const reference = <T>(
     $: string,
 ): Reference<_pi.Deprecated_Source_Location> => {
     return {
         'l location': get_location_info(depth + 1),
-        'l value': $,
+        'l reference': $,
     }
 }
 
-export const wrap_stack_reference = <T>(
-    name: string,
-): Stack_Reference<_pi.Deprecated_Source_Location> => {
+export const state = <T extends readonly [string, any]>(
+    $: T,
+): State<T> => {
     return {
         'l location': get_location_info(depth + 1),
-        'l value': name,
+        'l state': $,
+    }
+}
+
+export const text = (
+    $: string,
+): Text<_pi.Deprecated_Source_Location> => {
+    return {
+        'l location': get_location_info(depth + 1),
+        'l text': $,
     }
 }
