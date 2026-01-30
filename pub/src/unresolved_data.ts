@@ -11,29 +11,29 @@ export type Raw_Optional<T> = null | undefined | T
 
 
 export type Reference_To_Normal_Dictionary_Entry<G_Source, T_Dictionary_Entry> = {
-    readonly 'id': string
-    readonly 'location': G_Source
+    readonly 'l id': string
+    readonly 'l location': G_Source
 }
 
 export type Reference_To_Stacked_Dictionary_Entry<G_Source, T_Dictionary_Entry> = {
-    readonly 'id': string
-    readonly 'location': G_Source
+    readonly 'l id': string
+    readonly 'l location': G_Source
 }
 
 export type Dictionary<G_Source, T_D> = {
-    readonly 'dictionary': _pi.Dictionary<{
-        readonly 'entry': T_D
-        readonly 'location': G_Source
+    readonly 'l dictionary': _pi.Dictionary<{
+        readonly 'l entry': T_D
+        readonly 'l location': G_Source
     }>
-    readonly 'location': G_Source
+    readonly 'l location': G_Source
 }
 
 export type List<G_Source, T_L> = {
-    readonly 'list': _pi.List<{
-        readonly 'item': T_L
-        readonly 'location': G_Source
+    readonly 'l list': _pi.List<{
+        readonly 'l item': T_L
+        readonly 'l location': G_Source
     }>
-    readonly 'location': G_Source
+    readonly 'l location': G_Source
 }
 
 //implementations
@@ -62,18 +62,18 @@ export const wrap_dictionary = <T>(
     }
     if (is_normal($)) {
         return {
-            'location': location,
-            'dictionary': $.__d_map(($) => ({
-                'location': location,
-                'entry': $,
+            'l location': location,
+            'l dictionary': $.__d_map(($) => ({
+                'l location': location,
+                'l entry': $,
             }))
         }
     } else {
         return {
-            'location': location,
-            'dictionary': _pinternals.dictionary.literal($).__d_map(($) => ({
-                'location': location,
-                'entry': $,
+            'l location': location,
+            'l dictionary': _pinternals.dictionary.literal($).__d_map(($) => ({
+                'l location': location,
+                'l entry': $,
             }))
         }
     }
@@ -91,10 +91,10 @@ export const wrap_list = <T>(
         throw new Error("invalid input in 'wrap_list'")
     }
     return {
-        'location': location,
-        'list': decorated.__l_map(($) => ({
-            'location': location,
-            'item': $,
+        'l location': location,
+        'l list': decorated.__l_map(($) => ({
+            'l location': location,
+            'l item': $,
         }))
     }
 }
@@ -123,8 +123,8 @@ export const wrap_reference = <T>(
     $: string,
 ): Reference_To_Normal_Dictionary_Entry<_pi.Deprecated_Source_Location, T> => {
     return {
-        'location': get_location_info(depth + 1),
-        'id': $,
+        'l location': get_location_info(depth + 1),
+        'l id': $,
     }
 }
 
@@ -132,7 +132,7 @@ export const wrap_stack_reference = <T>(
     name: string,
 ): Reference_To_Stacked_Dictionary_Entry<_pi.Deprecated_Source_Location, T> => {
     return {
-        'location': get_location_info(depth + 1),
-        'id': name,
+        'l location': get_location_info(depth + 1),
+        'l id': name,
     }
 }
