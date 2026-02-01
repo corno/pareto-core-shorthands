@@ -76,7 +76,7 @@ export namespace optionalx {
 
 }
 
-export const component = <T>(
+export const constrained_component = <T>(
     $: T,
 ): Component<T> => {
     return {
@@ -111,17 +111,17 @@ export const dictionary = <T>(
     }
 }
 
-export const group = <T>(
-    $: T,
-): {
-    readonly 'l location': _pi.Deprecated_Source_Location
-    readonly 'l value': T
-} => {
-    return {
-        'l location': get_location_info(depth + 1),
-        'l value': $,
-    }
-}
+// export const group = <T>(
+//     $: T,
+// ): {
+//     readonly 'l location': _pi.Deprecated_Source_Location
+//     readonly 'l value': T
+// } => {
+//     return {
+//         'l location': get_location_info(depth + 1),
+//         'l value': $,
+//     }
+// }
 
 export const list = <T>(
     $: Raw_Or_Normal_List<T>,
@@ -143,21 +143,21 @@ export const list = <T>(
     }
 }
 
-export const nothing = (): Nothing<_pi.Deprecated_Source_Location> => {
-    return {
-        'l location': get_location_info(depth + 1),
-        'l nothing': null,
-    }
-}
+// export const nothing = (): Nothing<_pi.Deprecated_Source_Location> => {
+//     return {
+//         'l location': get_location_info(depth + 1),
+//         'l nothing': null,
+//     }
+// }
 
-export const number = (
-    $: number,
-): Number<_pi.Deprecated_Source_Location> => {
-    return {
-        'l location': get_location_info(depth + 1),
-        'l number': $,
-    }
-}
+// export const number = (
+//     $: number,
+// ): Number<_pi.Deprecated_Source_Location> => {
+//     return {
+//         'l location': get_location_info(depth + 1),
+//         'l number': $,
+//     }
+// }
 
 export const optional = <T>(
     $: T | null | undefined,
@@ -187,11 +187,11 @@ export const state = <T extends readonly [string, any]>(
     }
 }
 
-export const text = (
-    $: string,
-): Text<_pi.Deprecated_Source_Location> => {
-    return {
-        'l location': get_location_info(depth + 1),
-        'l text': $,
-    }
-}
+// export const text = (
+//     $: string,
+// ): Text<_pi.Deprecated_Source_Location> => {
+//     return {
+//         'l location': get_location_info(depth + 1),
+//         'l text': $,
+//     }
+// }
