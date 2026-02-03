@@ -127,13 +127,10 @@ export const list = <T>(
     $: Raw_Or_Normal_List<T>,
 ): List<_pi.Deprecated_Source_Location, T> => {
     const location = get_location_info(depth + 1)
-    const decorated: _pi.List<T> = $ instanceof Array
+    const decorated: _pi.List<T> = ($ instanceof Array)
         ? _pinternals.list.literal($)
         : $
 
-    if (!(decorated.__for_each instanceof Function)) {
-        throw new Error("invalid input in 'list'")
-    }
     return {
         'l location': location,
         'l list': decorated.__l_map(($) => ({

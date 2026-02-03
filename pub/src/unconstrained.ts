@@ -40,13 +40,9 @@ export namespace dictionary {
 export namespace list {
 
     export const literal = <T>($: Raw_Or_Normal_List<T>): _pi.List<T> => {
-        if ($ instanceof Array) {
-            return _pinternals.list.literal($)
-        }
-        if (!($.__for_each instanceof Function)) {
-            throw new Error("invalid input in 'wrap_list'")
-        }
-        return $
+        return ($ instanceof Array)
+            ? _pinternals.list.literal($)
+            : $
     }
 
 }
