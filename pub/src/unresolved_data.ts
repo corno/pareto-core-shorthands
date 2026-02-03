@@ -1,6 +1,6 @@
 import * as _pi from "pareto-core/dist/interface"
-import * as _pinternals from "pareto-core/dist/__internals/sync/expression/initialize"
-import { $$ as get_location_info } from "pareto-core/dist/__internals/sync/get_location_info"
+import * as _p from "pareto-core/dist/expression"
+import { $$ as get_location_info } from "pareto-core/dist/__internals/get_location_info"
 
 //types
 
@@ -64,8 +64,8 @@ export type Text<G_Source> = {
 const depth = 1
 export namespace optionalx {
 
-    export const set = _pinternals.optional.set
-    export const not_set = _pinternals.optional.not_set
+    export const set = _p.optional.set
+    export const not_set = _p.optional.not_set
     export const literal = <T>($: Raw_Optional<T>): _pi.Optional_Value<T> => {
         if ($ === null || $ === undefined) {
             return not_set()
@@ -103,7 +103,7 @@ export const dictionary = <T>(
     } else {
         return {
             'l location': location,
-            'l dictionary': _pinternals.dictionary.literal($).__d_map(($) => ({
+            'l dictionary': _p.dictionary.literal($).__d_map(($) => ({
                 'l location': location,
                 'l entry': $,
             }))
@@ -128,7 +128,7 @@ export const list = <T>(
 ): List<_pi.Deprecated_Source_Location, T> => {
     const location = get_location_info(depth + 1)
     const decorated: _pi.List<T> = ($ instanceof Array)
-        ? _pinternals.list.literal($)
+        ? _p.list.literal($)
         : $
 
     return {
@@ -160,9 +160,9 @@ export const optional = <T>(
     $: T | null | undefined,
 ): _pi.Optional_Value<T> => {
     if ($ === null || $ === undefined) {
-        return _pinternals.optional.not_set()
+        return _p.optional.not_set()
     } else {
-        return _pinternals.optional.set($)
+        return _p.optional.set($)
     }
 }
 

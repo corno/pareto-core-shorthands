@@ -1,6 +1,6 @@
 import * as _pi from "pareto-core/dist/interface"
 
-import * as _pinternals from "pareto-core/dist/__internals/sync/expression/initialize"
+import * as _p from "pareto-core/dist/expression"
 
 
 export type Raw_Or_Normal_Dictionary<T> = { [id: string]: T } | _pi.Dictionary<T>
@@ -9,8 +9,8 @@ export type Raw_Optional<T> = null | undefined | T
 
 export namespace optional {
 
-    export const set = _pinternals.optional.set
-    export const not_set = _pinternals.optional.not_set
+    export const set = _p.optional.set
+    export const not_set = _p.optional.not_set
 
     export const literal = <T>($: Raw_Optional<T>): _pi.Optional_Value<T> => {
         if ($ === null || $ === undefined) {
@@ -31,7 +31,7 @@ export namespace dictionary {
         if (is_normal($)) {
             return $
         } else {
-            return _pinternals.dictionary.literal($)
+            return _p.dictionary.literal($)
         }
     }
 
@@ -41,7 +41,7 @@ export namespace list {
 
     export const literal = <T>($: Raw_Or_Normal_List<T>): _pi.List<T> => {
         return ($ instanceof Array)
-            ? _pinternals.list.literal($)
+            ? _p.list.literal($)
             : $
     }
 
