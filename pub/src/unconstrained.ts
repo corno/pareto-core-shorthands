@@ -1,6 +1,6 @@
 import * as _pi from "pareto-core/dist/interface"
 
-import * as _p from "pareto-core/dist/expression"
+import * as _p from "pareto-core/dist/assign"
 
 
 export type Raw_Or_Normal_Dictionary<T> = { [id: string]: T } | _pi.Dictionary<T>
@@ -9,14 +9,19 @@ export type Raw_Optional<T> = null | undefined | T
 
 export namespace optional {
 
-    export const set = _p.optional.set
-    export const not_set = _p.optional.not_set
+    export namespace literal {
 
-    export const literal = <T>($: Raw_Optional<T>): _pi.Optional_Value<T> => {
+        export const set = _p.optional.literal.set
+        export const not_set = _p.optional.literal.not_set
+
+
+    }
+
+    export const literalx = <T>($: Raw_Optional<T>): _pi.Optional_Value<T> => {
         if ($ === null || $ === undefined) {
-            return not_set()
-        } else  {
-            return set($)
+            return _p.optional.literal.not_set()
+        } else {
+            return _p.optional.literal.set($)
         }
     }
 }

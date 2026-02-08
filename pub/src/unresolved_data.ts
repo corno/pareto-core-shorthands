@@ -1,5 +1,5 @@
 import * as _pi from "pareto-core/dist/interface"
-import * as _p from "pareto-core/dist/expression"
+import * as _p from "pareto-core/dist/assign"
 import get_location_info from "./get_location_info"
 import * as gli from "./get_location_info"
 
@@ -65,8 +65,8 @@ export type Text<G_Source> = {
 const depth = 1
 export namespace optionalx {
 
-    export const set = _p.optional.set
-    export const not_set = _p.optional.not_set
+    export const set = _p.optional.literal.set
+    export const not_set = _p.optional.literal.not_set
     export const literal = <T>($: Raw_Optional<T>): _pi.Optional_Value<T> => {
         if ($ === null || $ === undefined) {
             return not_set()
@@ -161,9 +161,9 @@ export const optional = <T>(
     $: T | null | undefined,
 ): _pi.Optional_Value<T> => {
     if ($ === null || $ === undefined) {
-        return _p.optional.not_set()
+        return _p.optional.literal.not_set()
     } else {
-        return _p.optional.set($)
+        return _p.optional.literal.set($)
     }
 }
 
