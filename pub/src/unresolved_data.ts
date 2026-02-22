@@ -3,6 +3,22 @@ import * as _p from "pareto-core/dist/assign"
 import get_location_info from "./get_location_info"
 import * as gli from "./get_location_info"
 
+import * as astn_core_location from "astn-core/dist/interface/generated/liana/schemas/location/data"
+
+const get_location_info2 = (depth: number): astn_core_location.Range => {
+    const loc = get_location_info(depth)
+    return {
+        'start': {
+            'absolute': -1,
+            'relative': loc,
+        },
+        'end': {
+            'absolute': -1,
+            'relative': loc,
+        }
+    }
+}
+
 //types
 
 export type Raw_Or_Normal_Dictionary<T> = { [id: string]: T } | _pi.Dictionary<T>
@@ -10,7 +26,7 @@ export type Raw_Or_Normal_List<T> = T[] | _pi.List<T>
 export type Raw_Optional<T> = null | undefined | T
 
 export type Component<T> = {
-    readonly 'l location': gli.Source_Location
+    readonly 'l location': astn_core_location.Range
     readonly 'l component': T
 }
 
@@ -23,7 +39,7 @@ export type Dictionary<G_Source, T_D> = {
 }
 
 export type Group<T extends { [id: string]: any }> = {
-    readonly 'l location': gli.Source_Location
+    readonly 'l location': astn_core_location.Range
     readonly 'l group': T
 }
 
@@ -51,7 +67,7 @@ export type Reference<G_Source> = {
 }
 
 export type State<X> = {
-    readonly 'l location': gli.Source_Location
+    readonly 'l location': astn_core_location.Range
     readonly 'l state': X
 }
 
@@ -81,15 +97,15 @@ export const constrained_component = <T>(
     $: T,
 ): Component<T> => {
     return {
-        'l location': get_location_info(depth + 1),
+        'l location': get_location_info2(depth + 1),
         'l component': $,
     }
 }
 
 export const dictionary = <T>(
     $: Raw_Or_Normal_Dictionary<T>,
-): Dictionary<gli.Source_Location, T> => {
-    const location = get_location_info(depth + 1)
+): Dictionary<astn_core_location.Range, T> => {
+    const location = get_location_info2(depth + 1)
     function is_normal($: Raw_Or_Normal_Dictionary<T>): $ is _pi.Dictionary<T> {
         return $.__get_number_of_entries !== undefined && typeof $.__get_number_of_entries === "function"
     }
@@ -114,8 +130,8 @@ export const dictionary = <T>(
 
 export const list = <T>(
     $: Raw_Or_Normal_List<T>,
-): List<gli.Source_Location, T> => {
-    const location = get_location_info(depth + 1)
+): List<astn_core_location.Range, T> => {
+    const location = get_location_info2(depth + 1)
     const decorated: _pi.List<T> = ($ instanceof Array)
         ? _p.list.literal($)
         : $
@@ -141,9 +157,9 @@ export const optional = <T>(
 
 export const reference = <T>(
     $: string,
-): Reference<gli.Source_Location> => {
+): Reference<astn_core_location.Range> => {
     return {
-        'l location': get_location_info(depth + 1),
+        'l location': get_location_info2(depth + 1),
         'l reference': $,
     }
 }
@@ -152,7 +168,7 @@ export const state = <T extends readonly [string, any]>(
     $: T,
 ): State<T> => {
     return {
-        'l location': get_location_info(depth + 1),
+        'l location': get_location_info2(depth + 1),
         'l state': $,
     }
 }
