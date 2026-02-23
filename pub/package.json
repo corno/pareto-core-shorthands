@@ -1,6 +1,6 @@
 {
   "name": "pareto-core-shorthands",
-  "version": "0.2.21",
+  "version": "0.2.22",
   "license": "ISC",
   "description": "the pareto package used for building datasets",
   "author": "Corno",
@@ -24,6 +24,6 @@
   },
   "dependencies": {
     "astn-core": "^0.5.55",
-    "pareto-core": "^0.1.53"
+    "pareto-core": "^0.1.54"
   }
 }

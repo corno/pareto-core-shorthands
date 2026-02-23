@@ -6,7 +6,7 @@ import * as gli from "./get_location_info"
 import * as astn_core_location from "astn-core/dist/interface/generated/liana/schemas/location/data"
 
 const get_location_info2 = (depth: number): astn_core_location.Range => {
-    const loc = get_location_info(depth)
+    const loc = get_location_info(depth + 1)
     return {
         'start': {
             'absolute': -1,
