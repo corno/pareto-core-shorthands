@@ -24,6 +24,6 @@
   },
   "dependencies": {
     "astn-core": "^0.5.58",
-    "pareto-core": "^0.1.56"
+    "pareto-core": "^0.1.57"
   }
 }
