@@ -23,7 +23,7 @@
     "url": "git+https://github.com/corno/pareto-core-shorthands.git"
   },
   "dependencies": {
-    "astn-core": "^0.5.58",
+    "astn-core": "^0.5.62",
     "pareto-core": "^0.1.57"
   }
 }
