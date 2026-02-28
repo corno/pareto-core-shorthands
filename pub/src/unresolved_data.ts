@@ -1,12 +1,11 @@
 import * as _pi from "pareto-core/dist/interface"
 import * as _p from "pareto-core/dist/assign"
 import get_location_info from "./get_location_info"
-import * as gli from "./get_location_info"
 
 import * as astn_core_location from "astn-core/dist/interface/generated/liana/schemas/location/data"
 
-const get_location_info2 = (depth: number): astn_core_location.Range => {
-    const loc = get_location_info(depth + 1)
+const get_location_info_2_deep = (): astn_core_location.Range => {
+    const loc = get_location_info(2) //2 because we want the caller of the caller of this function, which is the one that is creating the data structure
     return {
         'start': {
             'absolute': -1,
@@ -77,8 +76,6 @@ export type Text<G_Source> = {
 }
 
 //implementations
-
-const depth = 1
 export namespace optionalx {
 
     export const set = _p.optional.literal.set
@@ -97,7 +94,7 @@ export const constrained_component = <T>(
     $: T,
 ): Component<T> => {
     return {
-        'l location': get_location_info2(depth),
+        'l location': get_location_info_2_deep(),
         'l component': $,
     }
 }
@@ -105,7 +102,7 @@ export const constrained_component = <T>(
 export const dictionary = <T>(
     $: Raw_Or_Normal_Dictionary<T>,
 ): Dictionary<astn_core_location.Range, T> => {
-    const location = get_location_info2(depth)
+    const location = get_location_info_2_deep()
     function is_normal($: Raw_Or_Normal_Dictionary<T>): $ is _pi.Dictionary<T> {
         return $.__get_number_of_entries !== undefined && typeof $.__get_number_of_entries === "function"
     }
@@ -131,7 +128,7 @@ export const dictionary = <T>(
 export const list = <T>(
     $: Raw_Or_Normal_List<T>,
 ): List<astn_core_location.Range, T> => {
-    const location = get_location_info2(depth)
+    const location = get_location_info_2_deep()
     const decorated: _pi.List<T> = ($ instanceof Array)
         ? _p.list.literal($)
         : $
@@ -159,7 +156,7 @@ export const reference = <T>(
     $: string,
 ): Reference<astn_core_location.Range> => {
     return {
-        'l location': get_location_info2(depth),
+        'l location': get_location_info_2_deep(),
         'l reference': $,
     }
 }
@@ -168,7 +165,7 @@ export const state = <T extends readonly [string, any]>(
     $: T,
 ): State<T> => {
     return {
-        'l location': get_location_info2(depth),
+        'l location': get_location_info_2_deep(),
         'l state': $,
     }
 }
