@@ -51,7 +51,7 @@ export default function get_location_info(depth: number): Source_Location {
     }
     return {
         'document resource identifier': split[0],
-        'line': Number(split[1]),
-        'column': Number(split[2]),
+        'line': Number(split[1]) - 1, //we want to return a 0-based line number, but the stack is 1-based
+        'column': Number(split[2]) - 1, //we want to return a 0-based column number, but the stack is 1-based
     }
 }
