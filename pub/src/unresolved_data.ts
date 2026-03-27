@@ -2,11 +2,12 @@ import * as _pi from "pareto-core/dist/interface"
 import * as _p from "pareto-core/dist/assign"
 import get_location_info from "./get_location_info"
 
-import * as astn_core_location from "astn-core/dist/interface/generated/liana/schemas/location/data"
+import * as liana_core_location from "liana-core/dist/interface/to_be_generated/location"
 
-const get_location_info_2_deep = (): astn_core_location.Range => {
+const get_location_info_2_deep = (): liana_core_location.Range => {
     const loc = get_location_info(2) //2 because we want the caller of the caller of this function, which is the one that is creating the data structure
     return {
+        'document resource identifier': loc['document resource identifier'],
         'start': {
             'absolute': -1,
             'relative': loc,
@@ -25,7 +26,7 @@ export type Raw_Or_Normal_List<T> = T[] | _pi.List<T>
 export type Raw_Optional<T> = null | undefined | T
 
 export type Component<T> = {
-    readonly 'l location': astn_core_location.Range
+    readonly 'l location': liana_core_location.Range
     readonly 'l component': T
 }
 
@@ -38,7 +39,7 @@ export type Dictionary<G_Source, T_D> = {
 }
 
 export type Group<T extends { [id: string]: any }> = {
-    readonly 'l location': astn_core_location.Range
+    readonly 'l location': liana_core_location.Range
     readonly 'l group': T
 }
 
@@ -66,7 +67,7 @@ export type Reference<G_Source> = {
 }
 
 export type State<X> = {
-    readonly 'l location': astn_core_location.Range
+    readonly 'l location': liana_core_location.Range
     readonly 'l state': X
 }
 
@@ -101,7 +102,7 @@ export const constrained_component = <T>(
 
 export const dictionary = <T>(
     $: Raw_Or_Normal_Dictionary<T>,
-): Dictionary<astn_core_location.Range, T> => {
+): Dictionary<liana_core_location.Range, T> => {
     const location = get_location_info_2_deep()
     function is_normal($: Raw_Or_Normal_Dictionary<T>): $ is _pi.Dictionary<T> {
         return $.__get_number_of_entries !== undefined && typeof $.__get_number_of_entries === "function"
@@ -127,7 +128,7 @@ export const dictionary = <T>(
 
 export const list = <T>(
     $: Raw_Or_Normal_List<T>,
-): List<astn_core_location.Range, T> => {
+): List<liana_core_location.Range, T> => {
     const location = get_location_info_2_deep()
     const decorated: _pi.List<T> = ($ instanceof Array)
         ? _p.list.literal($)
@@ -154,7 +155,7 @@ export const optional = <T>(
 
 export const reference = <T>(
     $: string,
-): Reference<astn_core_location.Range> => {
+): Reference<liana_core_location.Range> => {
     return {
         'l location': get_location_info_2_deep(),
         'l reference': $,
