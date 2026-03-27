@@ -2,21 +2,36 @@ import * as _pi from "pareto-core/dist/interface"
 import * as _p from "pareto-core/dist/assign"
 import get_location_info from "./get_location_info"
 
-import * as liana_core_location from "liana-core/dist/interface/to_be_generated/location"
+import * as liana_core_location from "liana-core/dist/interface/to_be_generated/document_and_location"
 
 const get_location_info_2_deep = (): liana_core_location.Range => {
     const loc = get_location_info(2) //2 because we want the caller of the caller of this function, which is the one that is creating the data structure
-    return {
-        'document resource identifier': loc['document resource identifier'],
-        'start': {
-            'absolute': -1,
-            'relative': loc,
+    return ['in subdocument', {
+        'context': {
+            'subdocument resource identifier': loc["document resource identifier"],
+            'range of include in main document': {
+                'start': {
+                    'absolute': -1,
+                    'relative': loc,
+                },
+                'end': {
+                    'absolute': -1,
+                    'relative': loc,
+                }
+            }
         },
-        'end': {
-            'absolute': -1,
-            'relative': loc,
+        'range': {
+
+            'start': {
+                'absolute': -1,
+                'relative': loc,
+            },
+            'end': {
+                'absolute': -1,
+                'relative': loc,
+            }
         }
-    }
+    }]
 }
 
 //types
