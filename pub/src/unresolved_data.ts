@@ -4,8 +4,8 @@ import get_location_info from "./get_location_info"
 
 import * as liana_core_location from "liana-core/dist/interface/to_be_generated/document_and_location"
 
-const get_location_info_2_deep = (): liana_core_location.Range => {
-    const loc = get_location_info(2) //2 because we want the caller of the caller of this function, which is the one that is creating the data structure
+const get_location_info_3_deep = (): liana_core_location.Range => {
+    const loc = get_location_info(3) //3 because we want the caller of the caller (in the shorthands file) of the caller (in this file) of this function, which is the one that is creating the data structure
     return ['in subdocument', {
         'context': {
             'subdocument resource identifier': loc["document resource identifier"],
@@ -110,7 +110,7 @@ export const constrained_component = <T>(
     $: T,
 ): Component<T> => {
     return {
-        'l location': get_location_info_2_deep(),
+        'l location': get_location_info_3_deep(),
         'l component': $,
     }
 }
@@ -118,7 +118,7 @@ export const constrained_component = <T>(
 export const dictionary = <T>(
     $: Raw_Or_Normal_Dictionary<T>,
 ): Dictionary<liana_core_location.Range, T> => {
-    const location = get_location_info_2_deep()
+    const location = get_location_info_3_deep()
     function is_normal($: Raw_Or_Normal_Dictionary<T>): $ is _pi.Dictionary<T> {
         return $.__get_number_of_entries !== undefined && typeof $.__get_number_of_entries === "function"
     }
@@ -144,7 +144,7 @@ export const dictionary = <T>(
 export const list = <T>(
     $: Raw_Or_Normal_List<T>,
 ): List<liana_core_location.Range, T> => {
-    const location = get_location_info_2_deep()
+    const location = get_location_info_3_deep()
     const decorated: _pi.List<T> = ($ instanceof Array)
         ? _p.list.literal($)
         : $
@@ -172,7 +172,7 @@ export const reference = <T>(
     $: string,
 ): Reference<liana_core_location.Range> => {
     return {
-        'l location': get_location_info_2_deep(),
+        'l location': get_location_info_3_deep(),
         'l reference': $,
     }
 }
@@ -181,7 +181,7 @@ export const state = <T extends readonly [string, any]>(
     $: T,
 ): State<T> => {
     return {
-        'l location': get_location_info_2_deep(),
+        'l location': get_location_info_3_deep(),
         'l state': $,
     }
 }
