@@ -1,6 +1,6 @@
 {
   "name": "pareto-core-shorthands",
-  "version": "0.2.32",
+  "version": "0.2.33",
   "license": "ISC",
   "description": "the pareto package used for building datasets",
   "author": "Corno",
@@ -23,7 +23,7 @@
     "url": "git+https://github.com/corno/pareto-core-shorthands.git"
   },
   "dependencies": {
-    "liana-core": "^0.1.18",
-    "pareto-core": "^0.1.64"
+    "liana-core": "0.1.18",
+    "pareto-core": "0.1.67"
   }
 }
