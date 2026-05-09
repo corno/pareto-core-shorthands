@@ -1,7 +1,7 @@
 {
   "name": "pareto-core-shorthands",
   "version": "0.2.34",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "description": "the pareto package used for building datasets",
   "author": "Corno",
   "keywords": [
