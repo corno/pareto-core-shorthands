@@ -1,4 +1,4 @@
-import * as _pi from "pareto-core/dist/interface"
+import * as p_di from "pareto-core/dist/data/interface"
 import * as _p from "pareto-core/dist/assign"
 import get_location_info from "./get_location_info"
 
@@ -36,47 +36,47 @@ const get_location_info_3_deep = (): liana_core_location.Range => {
 
 //types
 
-export type Raw_Or_Normal_Dictionary<T extends _pi.Value> = { [id: string]: T } | _pi.Dictionary<T>
-export type Raw_Or_Normal_List<T extends _pi.Value> = T[] | _pi.List<T>
-export type Raw_Optional<T extends _pi.Value> = null | undefined | T
+export type Raw_Or_Normal_Dictionary<T extends p_di.Value> = { [id: string]: T } | p_di.Dictionary<T>
+export type Raw_Or_Normal_List<T extends p_di.Value> = T[] | p_di.List<T>
+export type Raw_Optional<T extends p_di.Value> = null | undefined | T
 
 export type Component<T> = {
     readonly 'l location': liana_core_location.Range
     readonly 'l component': T
 }
 
-export type Dictionary<G_Source extends _pi.Value, T_D extends _pi.Value> = {
+export type Dictionary<G_Source extends p_di.Value, T_D extends p_di.Value> = {
     readonly 'l location': G_Source
-    readonly 'l dictionary': _pi.Dictionary<{
+    readonly 'l dictionary': p_di.Dictionary<{
         readonly 'l entry': T_D
         readonly 'l location': G_Source
     }>
 }
 
-export type Group<T extends { [id: string]: _pi.Value }> = {
+export type Group<T extends { [id: string]: p_di.Value }> = {
     readonly 'l location': liana_core_location.Range
     readonly 'l group': T
 }
 
-export type List<G_Source extends _pi.Value, T_L extends _pi.Value> = {
-    readonly 'l list': _pi.List<{
+export type List<G_Source extends p_di.Value, T_L extends p_di.Value> = {
+    readonly 'l list': p_di.List<{
         readonly 'l item': T_L
         readonly 'l location': G_Source
     }>
     readonly 'l location': G_Source
 }
 
-export type Nothing<G_Source extends _pi.Value> = {
+export type Nothing<G_Source extends p_di.Value> = {
     readonly 'l location': G_Source
     readonly 'l nothing': null
 }
 
-export type Number<G_Source extends _pi.Value> = {
+export type Number<G_Source extends p_di.Value> = {
     readonly 'l location': G_Source
     readonly 'l number': number
 }
 
-export type Reference<G_Source extends _pi.Value> = {
+export type Reference<G_Source extends p_di.Value> = {
     readonly 'l location': G_Source
     readonly 'l reference': string
 }
@@ -86,7 +86,7 @@ export type State<X> = {
     readonly 'l state': X
 }
 
-export type Text<G_Source extends _pi.Value> = {
+export type Text<G_Source extends p_di.Value> = {
     readonly 'l location': G_Source
     readonly 'l text': string
 }
@@ -96,7 +96,7 @@ export namespace optionalx {
 
     export const set = _p.optional.literal.set
     export const not_set = _p.optional.literal.not_set
-    export const literal = <T extends _pi.Value>($: Raw_Optional<T>): _pi.Optional_Value<T> => {
+    export const literal = <T extends p_di.Value>($: Raw_Optional<T>): p_di.Optional_Value<T> => {
         if ($ === null || $ === undefined) {
             return not_set()
         } else {
@@ -115,11 +115,11 @@ export const constrained_component = <T>(
     }
 }
 
-export const dictionary = <T extends _pi.Value>(
+export const dictionary = <T extends p_di.Value>(
     $: Raw_Or_Normal_Dictionary<T>,
 ): Dictionary<liana_core_location.Range, T> => {
     const location = get_location_info_3_deep()
-    function is_normal($: Raw_Or_Normal_Dictionary<T>): $ is _pi.Dictionary<T> {
+    function is_normal($: Raw_Or_Normal_Dictionary<T>): $ is p_di.Dictionary<T> {
         return $.__get_number_of_entries !== undefined && typeof $.__get_number_of_entries === "function"
     }
     if (is_normal($)) {
@@ -141,11 +141,11 @@ export const dictionary = <T extends _pi.Value>(
     }
 }
 
-export const list = <T extends _pi.Value>(
+export const list = <T extends p_di.Value>(
     $: Raw_Or_Normal_List<T>,
 ): List<liana_core_location.Range, T> => {
     const location = get_location_info_3_deep()
-    const decorated: _pi.List<T> = ($ instanceof Array)
+    const decorated: p_di.List<T> = ($ instanceof Array)
         ? _p.list.literal($)
         : $
 
@@ -158,9 +158,9 @@ export const list = <T extends _pi.Value>(
     }
 }
 
-export const optional = <T extends _pi.Value>(
+export const optional = <T extends p_di.Value>(
     $: T | null | undefined,
-): _pi.Optional_Value<T> => {
+): p_di.Optional_Value<T> => {
     if ($ === null || $ === undefined) {
         return _p.optional.literal.not_set()
     } else {
@@ -168,7 +168,7 @@ export const optional = <T extends _pi.Value>(
     }
 }
 
-export const reference = <T extends _pi.Value>(
+export const reference = <T extends p_di.Value>(
     $: string,
 ): Reference<liana_core_location.Range> => {
     return {
@@ -177,7 +177,7 @@ export const reference = <T extends _pi.Value>(
     }
 }
 
-export const state = <T extends readonly [string, any]>(
+export const state = <T extends p_di.State>(
     $: T,
 ): State<T> => {
     return {

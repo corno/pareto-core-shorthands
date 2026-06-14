@@ -1,11 +1,11 @@
-import * as _pi from "pareto-core/dist/interface"
+import * as p_di from "pareto-core/dist/data/interface"
 
 import * as _p from "pareto-core/dist/assign"
 
 
-export type Raw_Or_Normal_Dictionary<T extends _pi.Value> = { [id: string]: T } | _pi.Dictionary<T>
-export type Raw_Or_Normal_List<T extends _pi.Value> = T[] | _pi.List<T>
-export type Raw_Optional<T extends _pi.Value> = null | undefined | T
+export type Raw_Or_Normal_Dictionary<T extends p_di.Value> = { [id: string]: T } | p_di.Dictionary<T>
+export type Raw_Or_Normal_List<T extends p_di.Value> = T[] | p_di.List<T>
+export type Raw_Optional<T extends p_di.Value> = null | undefined | T
 
 export namespace optional {
 
@@ -17,7 +17,7 @@ export namespace optional {
 
     }
 
-    export const literalx = <T extends _pi.Value>($: Raw_Optional<T>): _pi.Optional_Value<T> => {
+    export const literalx = <T extends p_di.Value>($: Raw_Optional<T>): p_di.Optional_Value<T> => {
         if ($ === null || $ === undefined) {
             return _p.optional.literal.not_set()
         } else {
@@ -29,8 +29,8 @@ export namespace optional {
 
 export namespace dictionary {
 
-    export const literal = <T extends _pi.Value>($: Raw_Or_Normal_Dictionary<T>): _pi.Dictionary<T> => {
-        function is_normal($: Raw_Or_Normal_Dictionary<T>): $ is _pi.Dictionary<T> {
+    export const literal = <T extends p_di.Value>($: Raw_Or_Normal_Dictionary<T>): p_di.Dictionary<T> => {
+        function is_normal($: Raw_Or_Normal_Dictionary<T>): $ is p_di.Dictionary<T> {
             return $.__get_number_of_entries !== undefined && typeof $.__get_number_of_entries === "function"
         }
         if (is_normal($)) {
@@ -44,7 +44,7 @@ export namespace dictionary {
 
 export namespace list {
 
-    export const literal = <T extends _pi.Value>($: Raw_Or_Normal_List<T>): _pi.List<T> => {
+    export const literal = <T extends p_di.Value>($: Raw_Or_Normal_List<T>): p_di.List<T> => {
         return ($ instanceof Array)
             ? _p.list.literal($)
             : $
