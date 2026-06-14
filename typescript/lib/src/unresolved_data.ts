@@ -36,16 +36,16 @@ const get_location_info_3_deep = (): liana_core_location.Range => {
 
 //types
 
-export type Raw_Or_Normal_Dictionary<T> = { [id: string]: T } | _pi.Dictionary<T>
-export type Raw_Or_Normal_List<T> = T[] | _pi.List<T>
-export type Raw_Optional<T> = null | undefined | T
+export type Raw_Or_Normal_Dictionary<T extends _pi.Value> = { [id: string]: T } | _pi.Dictionary<T>
+export type Raw_Or_Normal_List<T extends _pi.Value> = T[] | _pi.List<T>
+export type Raw_Optional<T extends _pi.Value> = null | undefined | T
 
 export type Component<T> = {
     readonly 'l location': liana_core_location.Range
     readonly 'l component': T
 }
 
-export type Dictionary<G_Source, T_D> = {
+export type Dictionary<G_Source extends _pi.Value, T_D extends _pi.Value> = {
     readonly 'l location': G_Source
     readonly 'l dictionary': _pi.Dictionary<{
         readonly 'l entry': T_D
@@ -53,12 +53,12 @@ export type Dictionary<G_Source, T_D> = {
     }>
 }
 
-export type Group<T extends { [id: string]: any }> = {
+export type Group<T extends { [id: string]: _pi.Value }> = {
     readonly 'l location': liana_core_location.Range
     readonly 'l group': T
 }
 
-export type List<G_Source, T_L> = {
+export type List<G_Source extends _pi.Value, T_L extends _pi.Value> = {
     readonly 'l list': _pi.List<{
         readonly 'l item': T_L
         readonly 'l location': G_Source
@@ -66,17 +66,17 @@ export type List<G_Source, T_L> = {
     readonly 'l location': G_Source
 }
 
-export type Nothing<G_Source> = {
+export type Nothing<G_Source extends _pi.Value> = {
     readonly 'l location': G_Source
     readonly 'l nothing': null
 }
 
-export type Number<G_Source> = {
+export type Number<G_Source extends _pi.Value> = {
     readonly 'l location': G_Source
     readonly 'l number': number
 }
 
-export type Reference<G_Source> = {
+export type Reference<G_Source extends _pi.Value> = {
     readonly 'l location': G_Source
     readonly 'l reference': string
 }
@@ -86,7 +86,7 @@ export type State<X> = {
     readonly 'l state': X
 }
 
-export type Text<G_Source> = {
+export type Text<G_Source extends _pi.Value> = {
     readonly 'l location': G_Source
     readonly 'l text': string
 }
@@ -96,7 +96,7 @@ export namespace optionalx {
 
     export const set = _p.optional.literal.set
     export const not_set = _p.optional.literal.not_set
-    export const literal = <T>($: Raw_Optional<T>): _pi.Optional_Value<T> => {
+    export const literal = <T extends _pi.Value>($: Raw_Optional<T>): _pi.Optional_Value<T> => {
         if ($ === null || $ === undefined) {
             return not_set()
         } else {
@@ -115,7 +115,7 @@ export const constrained_component = <T>(
     }
 }
 
-export const dictionary = <T>(
+export const dictionary = <T extends _pi.Value>(
     $: Raw_Or_Normal_Dictionary<T>,
 ): Dictionary<liana_core_location.Range, T> => {
     const location = get_location_info_3_deep()
@@ -141,7 +141,7 @@ export const dictionary = <T>(
     }
 }
 
-export const list = <T>(
+export const list = <T extends _pi.Value>(
     $: Raw_Or_Normal_List<T>,
 ): List<liana_core_location.Range, T> => {
     const location = get_location_info_3_deep()
@@ -158,7 +158,7 @@ export const list = <T>(
     }
 }
 
-export const optional = <T>(
+export const optional = <T extends _pi.Value>(
     $: T | null | undefined,
 ): _pi.Optional_Value<T> => {
     if ($ === null || $ === undefined) {
@@ -168,7 +168,7 @@ export const optional = <T>(
     }
 }
 
-export const reference = <T>(
+export const reference = <T extends _pi.Value>(
     $: string,
 ): Reference<liana_core_location.Range> => {
     return {
