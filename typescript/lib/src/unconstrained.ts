@@ -2,6 +2,11 @@ import * as p_di from "pareto-core/dist/data/interface"
 
 import * as p_a from "pareto-core/dist/assign"
 
+export function au<RT>(
+    _x: never
+): RT {
+    throw new Error("unreachable")
+}
 
 export type Raw_Or_Normal_Dictionary<T extends p_di.Value> = { [id: string]: T } | p_di.Dictionary<T>
 export type Raw_Or_Normal_List<T extends p_di.Value> = T[] | p_di.List<T>
