@@ -9,19 +9,14 @@ export type Raw_Optional<T extends p_di.Value> = null | undefined | T
 
 export namespace optional {
 
-    export namespace literal {
+    export const set = _p.literal.set
+    export const not_set = _p.literal.not_set
 
-        export const set = _p.optional.literal.set
-        export const not_set = _p.optional.literal.not_set
-
-
-    }
-
-    export const literalx = <T extends p_di.Value>($: Raw_Optional<T>): p_di.Optional_Value<T> => {
+    export const null_or_value = <T extends p_di.Value>($: Raw_Optional<T>): p_di.Optional_Value<T> => {
         if ($ === null || $ === undefined) {
-            return _p.optional.literal.not_set()
+            return _p.literal.not_set()
         } else {
-            return _p.optional.literal.set($)
+            return _p.literal.set($)
         }
     }
 }
@@ -36,7 +31,7 @@ export namespace dictionary {
         if (is_normal($)) {
             return $
         } else {
-            return _p.dictionary.literal($)
+            return _p.literal.dictionary($)
         }
     }
 
@@ -46,7 +41,7 @@ export namespace list {
 
     export const literal = <T extends p_di.Value>($: Raw_Or_Normal_List<T>): p_di.List<T> => {
         return ($ instanceof Array)
-            ? _p.list.literal($)
+            ? _p.literal.list($)
             : $
     }
 

@@ -94,8 +94,8 @@ export type Text<G_Source extends p_di.Value> = {
 //implementations
 export namespace optionalx {
 
-    export const set = _p.optional.literal.set
-    export const not_set = _p.optional.literal.not_set
+    export const set = _p.literal.set
+    export const not_set = _p.literal.not_set
     export const literal = <T extends p_di.Value>($: Raw_Optional<T>): p_di.Optional_Value<T> => {
         if ($ === null || $ === undefined) {
             return not_set()
@@ -133,7 +133,7 @@ export const dictionary = <T extends p_di.Value>(
     } else {
         return {
             'l location': location,
-            'l dictionary': _p.dictionary.literal($).__d_map(($) => ({
+            'l dictionary': _p.literal.dictionary($).__d_map(($) => ({
                 'l location': location,
                 'l entry': $,
             }))
@@ -146,7 +146,7 @@ export const list = <T extends p_di.Value>(
 ): List<liana_core_location.Range, T> => {
     const location = get_location_info_3_deep()
     const decorated: p_di.List<T> = ($ instanceof Array)
-        ? _p.list.literal($)
+        ? _p.literal.list($)
         : $
 
     return {
@@ -162,9 +162,9 @@ export const optional = <T extends p_di.Value>(
     $: T | null | undefined,
 ): p_di.Optional_Value<T> => {
     if ($ === null || $ === undefined) {
-        return _p.optional.literal.not_set()
+        return _p.literal.not_set()
     } else {
-        return _p.optional.literal.set($)
+        return _p.literal.set($)
     }
 }
 
