@@ -53,7 +53,7 @@ export type Dictionary<G_Source extends p_di.Value, T_D extends p_di.Value> = {
     }>
 }
 
-export type Group<T extends { [id: string]: p_di.Value }> = {
+export type Group<T extends p_di.Group> = {
     readonly 'l location': liana_core_location.Range
     readonly 'l group': T
 }
