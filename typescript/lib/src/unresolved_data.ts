@@ -2,7 +2,7 @@ import * as p_di from "pareto-core/dist/interface/data"
 import * as p_a from "pareto-core/dist/assign"
 import get_location_info from "./get_location_info"
 
-import * as liana_core_location from "liana-core/dist/interface/to_be_generated/document_and_location"
+import * as liana_core_location from "liana-core/dist/interface/data/document_and_location"
 
 const get_location_info_3_deep = (): liana_core_location.Range => {
     const loc = get_location_info(3) //3 because we want the caller of the caller (in the shorthands file) of the caller (in this file) of this function, which is the one that is creating the data structure
