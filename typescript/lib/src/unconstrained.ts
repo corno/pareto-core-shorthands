@@ -43,3 +43,11 @@ export const list = <T extends p_di.Value>($: Raw_Or_Normal_List<T>): p_di.List<
         ? p_.literal.list($)
         : $
 }
+
+export const nothing = (): symbol =>{
+    return Symbol()
+}
+
+export const group_empty = (): symbol =>{
+    return Symbol()
+}
