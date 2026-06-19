@@ -1,5 +1,6 @@
-import * as p_di from "pareto-core/dist/interface/data"
-import * as p_a from "pareto-core/dist/assign"
+import * as p_ from 'pareto-core/dist/implementation/transformer'
+import * as p_di from 'pareto-core/dist/interface/data'
+
 import get_location_info from "./get_location_info"
 
 import * as liana_core_location from "liana-core/dist/interface/data/document_and_location"
@@ -94,8 +95,8 @@ export type Text<G_Source extends p_di.Value> = {
 //implementations
 export namespace optional {
 
-    export const set = p_a.literal.set
-    export const not_set = p_a.literal.not_set
+    export const set = p_.literal.set
+    export const not_set = p_.literal.not_set
     export const null_or_value = <T extends p_di.Value>($: Raw_Optional<T>): p_di.Optional_Value<T> => {
         if ($ === null || $ === undefined) {
             return not_set()
@@ -133,7 +134,7 @@ export const dictionary = <T extends p_di.Value>(
     } else {
         return {
             'l location': location,
-            'l dictionary': p_a.literal.dictionary($).__d_map_deprecated(($) => ({
+            'l dictionary': p_.literal.dictionary($).__d_map_deprecated(($) => ({
                 'l location': location,
                 'l entry': $,
             }))
@@ -146,7 +147,7 @@ export const list = <T extends p_di.Value>(
 ): List<liana_core_location.Range, T> => {
     const location = get_location_info_3_deep()
     const decorated: p_di.List<T> = ($ instanceof Array)
-        ? p_a.literal.list($)
+        ? p_.literal.list($)
         : $
 
     return {
