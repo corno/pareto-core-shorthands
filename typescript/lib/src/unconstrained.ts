@@ -28,7 +28,7 @@ export namespace optional {
 
 export const dictionary = <T extends p_di.Value>($: Raw_Or_Normal_Dictionary<T>): p_di.Dictionary<T> => {
     function is_normal($: Raw_Or_Normal_Dictionary<T>): $ is p_di.Dictionary<T> {
-        return $.__get_entry_deprecated !== undefined && typeof $.__get_entry_deprecated === "function"
+        return $.__get_raw !== undefined && typeof $.__get_raw === "function"
     }
     if (is_normal($)) {
         return $

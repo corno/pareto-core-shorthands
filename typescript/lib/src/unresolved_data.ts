@@ -121,7 +121,7 @@ export const dictionary = <T extends p_di.Value>(
 ): Dictionary<liana_core_location.Range, T> => {
     const location = get_location_info_3_deep()
     function is_normal($: Raw_Or_Normal_Dictionary<T>): $ is p_di.Dictionary<T> {
-        return $.__get_entry_deprecated !== undefined && typeof $.__get_entry_deprecated === "function"
+        return $.__get_raw !== undefined && typeof $.__get_raw === "function"
     }
     if (is_normal($)) {
         return {
@@ -152,7 +152,7 @@ export const list = <T extends p_di.Value>(
 
     return {
         'l location': location,
-        'l list': decorated.__l_map_deprecated(($) => ({
+        'l list': p_.from.list(decorated).map(($) => ({
             'l location': location,
             'l item': $,
         }))
