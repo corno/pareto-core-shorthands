@@ -126,7 +126,7 @@ export const dictionary = <T extends p_di.Value>(
     if (is_normal($)) {
         return {
             'l location': location,
-            'l dictionary': $.__d_map_deprecated(($) => ({
+            'l dictionary': p_.from.dictionary($).map(($) => ({
                 'l location': location,
                 'l entry': $,
             }))
@@ -134,7 +134,7 @@ export const dictionary = <T extends p_di.Value>(
     } else {
         return {
             'l location': location,
-            'l dictionary': p_.literal.dictionary($).__d_map_deprecated(($) => ({
+            'l dictionary': p_.from.dictionary(p_.literal.dictionary($)).map(($) => ({
                 'l location': location,
                 'l entry': $,
             }))
