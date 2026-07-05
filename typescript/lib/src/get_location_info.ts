@@ -34,6 +34,11 @@ export default function get_location_info(depth: number): Source_Location {
             return match[1]!
         }
 
+        const beginESM = "    at file:///"
+        if (line.startsWith(beginESM)) {
+            return "/" + line.substring(beginESM.length)
+        }
+
         const begin = "    at /"
         if (line.startsWith(begin)) {
             return line.substring(begin.length - 1)
