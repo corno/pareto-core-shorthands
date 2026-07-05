@@ -23,7 +23,7 @@ export default function get_location_info(depth: number): Source_Location {
         if (e.stack === undefined) {
             throw new Error(`NO STACK INFO`)
         }
-        const line = e.stack.split("\n")[depth + 2]  //get the right line from the stack (the first two lines are "Error" and this function call)
+        const line = e.stack.split("\n")[depth + 2]!  //get the right line from the stack (the first two lines are "Error" and this function call)
 
         const regex = /\((.*)\)$/ //matches the content inside parentheses at the end of a line (the file path with line and column)
 
@@ -31,7 +31,7 @@ export default function get_location_info(depth: number): Source_Location {
 
         if (match !== null) {
             //we have a match
-            return match[1]
+            return match[1]!
         }
 
         const begin = "    at /"
@@ -50,7 +50,7 @@ export default function get_location_info(depth: number): Source_Location {
         throw new Error(`UNEXPECTED LOCATION FORMAT (CHECK THE DEPTH PARAMETER): ${line} (Expected 'file:line:column')`)
     }
     return {
-        'document resource identifier': split[0],
+        'document resource identifier': split[0]!,
         'line': Number(split[1]) - 1, //we want to return a 0-based line number, but the stack is 1-based
         'column': Number(split[2]) - 1, //we want to return a 0-based column number, but the stack is 1-based
     }
