@@ -1,5 +1,5 @@
-import * as p_ from 'pareto-core/dist/implementation/transformer'
-import * as p_di from 'pareto-core/dist/interface/data'
+import * as p_ from 'pareto-core/implementation/transformer'
+import * as p_di from 'pareto-core/interface/data'
 
 export function au<RT>(
     _x: never
