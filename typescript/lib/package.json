@@ -1,6 +1,6 @@
 {
   "name": "pareto-core-shorthands",
-  "version": "0.2.51",
+  "version": "0.2.52",
   "license": "Apache-2.0",
   "description": "the pareto package used for building datasets",
   "author": "Corno",
@@ -13,6 +13,7 @@
   "bugs": {
     "url": "https://github.com/corno/pareto-core-shorthands/issues"
   },
+  "type": "module",
   "exports": {
     "./*": {
       "types": "./dist/*.d.ts",
