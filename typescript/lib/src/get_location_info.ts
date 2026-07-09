@@ -11,7 +11,7 @@ export type Source_Location = {
  * @param depth 
  * @returns 
  */
-export default function get_location_info(depth: number): Source_Location {
+export default function (depth: number): Source_Location {
 
     //we create an error, not to be thrown but to be disected for its stack
     const e = new Error(); //don't move this statement to another function, it will change the depth of its stack
