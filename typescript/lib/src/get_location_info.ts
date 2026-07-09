@@ -31,7 +31,12 @@ export default function get_location_info(depth: number): Source_Location {
 
         if (match !== null) {
             //we have a match
-            return match[1]!
+            const result = match[1]!
+            const filePrefix = "file://"
+            if (result.startsWith(filePrefix)) {
+                return result.substring(filePrefix.length)
+            }
+            return result
         }
 
         const beginESM = "    at file:///"
@@ -52,7 +57,14 @@ export default function get_location_info(depth: number): Source_Location {
     const line = get_line(e, depth)
     const split = line.split(":")
     if (split.length !== 3) {
-        throw new Error(`UNEXPECTED LOCATION FORMAT (CHECK THE DEPTH PARAMETER): ${line} (Expected 'file:line:column')`)
+        throw new Error(
+            [
+                "unexpected stack line format",
+                " expected: 'file:line:column'",
+                ` found: '${line}'`,
+                " is the depth parameter set correctly?"
+            ].join("\n")
+        )
     }
     return {
         'document resource identifier': split[0]!,
