@@ -1,162 +1,162 @@
-import * as p_ from 'pareto-core/implementation/transformer'
-import * as p_di from 'pareto-core/interface/data'
+// import * as p_ from 'pareto-core/implementation/transformer'
+// import * as p_di from 'pareto-core/interface/data'
 
-import get_location_info from "./get_location_info.js"
+// import get_location_info from "./get_location_info.js"
 
-import * as liana_core_location from "liana-core/interface/schemas/location"
+// import * as liana_core_location from "liana-core/interface/schemas/location"
 
-const get_location_info_3_deep = (): liana_core_location.Range => {
-    const loc = get_location_info(3) //3 because we want the caller of the caller (in the shorthands file) of the caller (in this file) of this function, which is the one that is creating the data structure
-    return {
-        'start': {
-            'absolute': -1,
-            'relative': loc,
-        },
-        'end': {
-            'absolute': -1,
-            'relative': loc,
-        }
-    }
-}
+// const get_location_info_3_deep = (): liana_core_location.Range => {
+//     const loc = get_location_info(3) //3 because we want the caller of the caller (in the shorthands file) of the caller (in this file) of this function, which is the one that is creating the data structure
+//     return {
+//         'start': {
+//             'absolute': -1,
+//             'relative': loc,
+//         },
+//         'end': {
+//             'absolute': -1,
+//             'relative': loc,
+//         }
+//     }
+// }
 
-//types
+// //types
 
-export type Raw_Or_Normal_Dictionary<T extends p_di.Value> = { [id: string]: T } | p_di.Dictionary<T>
-export type Raw_Or_Normal_List<T extends p_di.Value> = T[] | p_di.List<T>
-export type Raw_Optional<T extends p_di.Value> = null | undefined | T
+// export type Raw_Or_Normal_Dictionary<T extends p_di.Value> = { [id: string]: T } | p_di.Dictionary<T>
+// export type Raw_Or_Normal_List<T extends p_di.Value> = T[] | p_di.List<T>
+// export type Raw_Optional<T extends p_di.Value> = null | undefined | T
 
-export type Component<T> = {
-    readonly 'l location': liana_core_location.Range
-    readonly 'l component': T
-}
+// export type Component<T> = {
+//     readonly 'l location': liana_core_location.Range
+//     readonly 'l component': T
+// }
 
-export type Dictionary<G_Source extends p_di.Value, T_D extends p_di.Value> = {
-    readonly 'l location': G_Source
-    readonly 'l dictionary': p_di.Dictionary<{
-        readonly 'l entry': T_D
-        readonly 'l location': G_Source
-    }>
-}
+// export type Dictionary<G_Source extends p_di.Value, T_D extends p_di.Value> = {
+//     readonly 'l location': G_Source
+//     readonly 'l dictionary': p_di.Dictionary<{
+//         readonly 'l entry': T_D
+//         readonly 'l location': G_Source
+//     }>
+// }
 
-export type Group<T extends p_di.Group> = {
-    readonly 'l location': liana_core_location.Range
-    readonly 'l group': T
-}
+// export type Group<T extends p_di.Group> = {
+//     readonly 'l location': liana_core_location.Range
+//     readonly 'l group': T
+// }
 
-export type List<G_Source extends p_di.Value, T_L extends p_di.Value> = {
-    readonly 'l list': p_di.List<{
-        readonly 'l item': T_L
-        readonly 'l location': G_Source
-    }>
-    readonly 'l location': G_Source
-}
+// export type List<G_Source extends p_di.Value, T_L extends p_di.Value> = {
+//     readonly 'l list': p_di.List<{
+//         readonly 'l item': T_L
+//         readonly 'l location': G_Source
+//     }>
+//     readonly 'l location': G_Source
+// }
 
-export type Nothing<G_Source extends p_di.Value> = {
-    readonly 'l location': G_Source
-    readonly 'l nothing': null
-}
+// export type Nothing<G_Source extends p_di.Value> = {
+//     readonly 'l location': G_Source
+//     readonly 'l nothing': null
+// }
 
-export type Number<G_Source extends p_di.Value> = {
-    readonly 'l location': G_Source
-    readonly 'l number': number
-}
+// export type Number<G_Source extends p_di.Value> = {
+//     readonly 'l location': G_Source
+//     readonly 'l number': number
+// }
 
-export type Reference<G_Source extends p_di.Value> = {
-    readonly 'l location': G_Source
-    readonly 'l reference': string
-}
+// export type Reference<G_Source extends p_di.Value> = {
+//     readonly 'l location': G_Source
+//     readonly 'l reference': string
+// }
 
-export type State<X> = {
-    readonly 'l location': liana_core_location.Range
-    readonly 'l state': X
-}
+// export type State<X> = {
+//     readonly 'l location': liana_core_location.Range
+//     readonly 'l state': X
+// }
 
-export type Text<G_Source extends p_di.Value> = {
-    readonly 'l location': G_Source
-    readonly 'l text': string
-}
+// export type Text<G_Source extends p_di.Value> = {
+//     readonly 'l location': G_Source
+//     readonly 'l text': string
+// }
 
-//implementations
-export namespace optional {
+// //implementations
+// export namespace optional {
 
-    export const set = p_.literal.set
-    export const not_set = p_.literal.not_set
-    export const null_or_value = <T extends p_di.Value>($: Raw_Optional<T>): p_di.Optional_Value<T> => {
-        if ($ === null || $ === undefined) {
-            return not_set()
-        } else {
-            return set($)
-        }
-    }
+//     export const set = p_.literal.set
+//     export const not_set = p_.literal.not_set
+//     export const null_or_value = <T extends p_di.Value>($: Raw_Optional<T>): p_di.Optional_Value<T> => {
+//         if ($ === null || $ === undefined) {
+//             return not_set()
+//         } else {
+//             return set($)
+//         }
+//     }
 
-}
+// }
 
-export const constrained_component = <T>(
-    $: T,
-): Component<T> => {
-    return {
-        'l location': get_location_info_3_deep(),
-        'l component': $,
-    }
-}
+// export const constrained_component = <T>(
+//     $: T,
+// ): Component<T> => {
+//     return {
+//         'l location': get_location_info_3_deep(),
+//         'l component': $,
+//     }
+// }
 
-export const dictionary = <T extends p_di.Value>(
-    $: Raw_Or_Normal_Dictionary<T>,
-): Dictionary<liana_core_location.Range, T> => {
-    const location = get_location_info_3_deep()
-    function is_normal($: Raw_Or_Normal_Dictionary<T>): $ is p_di.Dictionary<T> {
-        return $.__get_raw !== undefined && typeof $.__get_raw === "function"
-    }
-    if (is_normal($)) {
-        return {
-            'l location': location,
-            'l dictionary': p_.from.dictionary($).map(($) => ({
-                'l location': location,
-                'l entry': $,
-            }))
-        }
-    } else {
-        return {
-            'l location': location,
-            'l dictionary': p_.from.dictionary(p_.literal.dictionary($)).map(($) => ({
-                'l location': location,
-                'l entry': $,
-            }))
-        }
-    }
-}
+// export const dictionary = <T extends p_di.Value>(
+//     $: Raw_Or_Normal_Dictionary<T>,
+// ): Dictionary<liana_core_location.Range, T> => {
+//     const location = get_location_info_3_deep()
+//     function is_normal($: Raw_Or_Normal_Dictionary<T>): $ is p_di.Dictionary<T> {
+//         return $.__get_raw !== undefined && typeof $.__get_raw === "function"
+//     }
+//     if (is_normal($)) {
+//         return {
+//             'l location': location,
+//             'l dictionary': p_.from.dictionary($).map(($) => ({
+//                 'l location': location,
+//                 'l entry': $,
+//             }))
+//         }
+//     } else {
+//         return {
+//             'l location': location,
+//             'l dictionary': p_.from.dictionary(p_.literal.dictionary($)).map(($) => ({
+//                 'l location': location,
+//                 'l entry': $,
+//             }))
+//         }
+//     }
+// }
 
-export const list = <T extends p_di.Value>(
-    $: Raw_Or_Normal_List<T>,
-): List<liana_core_location.Range, T> => {
-    const location = get_location_info_3_deep()
-    const decorated: p_di.List<T> = ($ instanceof Array)
-        ? p_.literal.list($)
-        : $
+// export const list = <T extends p_di.Value>(
+//     $: Raw_Or_Normal_List<T>,
+// ): List<liana_core_location.Range, T> => {
+//     const location = get_location_info_3_deep()
+//     const decorated: p_di.List<T> = ($ instanceof Array)
+//         ? p_.literal.list($)
+//         : $
 
-    return {
-        'l location': location,
-        'l list': p_.from.list(decorated).map(($) => ({
-            'l location': location,
-            'l item': $,
-        }))
-    }
-}
+//     return {
+//         'l location': location,
+//         'l list': p_.from.list(decorated).map(($) => ({
+//             'l location': location,
+//             'l item': $,
+//         }))
+//     }
+// }
 
-export const reference = <T extends p_di.Value>(
-    $: string,
-): Reference<liana_core_location.Range> => {
-    return {
-        'l location': get_location_info_3_deep(),
-        'l reference': $,
-    }
-}
+// export const reference = <T extends p_di.Value>(
+//     $: string,
+// ): Reference<liana_core_location.Range> => {
+//     return {
+//         'l location': get_location_info_3_deep(),
+//         'l reference': $,
+//     }
+// }
 
-export const state = <T extends p_di.State>(
-    $: T,
-): State<T> => {
-    return {
-        'l location': get_location_info_3_deep(),
-        'l state': $,
-    }
-}
+// export const state = <T extends p_di.State>(
+//     $: T,
+// ): State<T> => {
+//     return {
+//         'l location': get_location_info_3_deep(),
+//         'l state': $,
+//     }
+// }
