@@ -1,7 +1,7 @@
-import * as p_ from 'pareto-core/implementation/transformer'
-import * as p_di from 'pareto-core/interface/data'
+import * as p_ from 'pareto-core/transformer'
+import * as p_di from 'pareto-core/schema'
 
-export function au<RT>(
+export function exhaustive<RT>(
     _x: never
 ): RT {
     throw new Error("unreachable")

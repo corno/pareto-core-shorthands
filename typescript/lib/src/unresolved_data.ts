@@ -1,5 +1,5 @@
-// import * as p_ from 'pareto-core/implementation/transformer'
-// import * as p_di from 'pareto-core/interface/data'
+// import * as p_ from 'pareto-core/transformer'
+// import * as p_di from 'pareto-core/schema'
 
 // import get_location_info from "./get_location_info.js"
 
